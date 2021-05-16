@@ -1,13 +1,13 @@
 # Sistine 🏰
 
-**Sistine** is a static site generator written in [Ink](https://dotink.co/). Currently, Sistine is being developed within the nyc source tree, in `src/` and `vendor/`, but will be pulled out into its own repository eventually, when it's stable.
+**Sistine** is a simple, flexible, productive static site generator written in [Ink](https://dotink.co/) and built on [Merlot](https://github.com/thesephist/merlot)’s Markdown engine. You can see a live demo of a Sistine site [on the Sistine docs website](https://sistine.vercel.app/).
 
 ## Directory structure
 
 ```
 vendor/ - vendored Ink libraries
 src/ - Ink static site generator source
-test/ - Tests for Sistine
+test/ - tests for Sistine
 content/ - Markdown-formatted blog content
 tpl/ - page templates
 static/ - static files copied to the generated site
@@ -55,6 +55,8 @@ Template parts are partial templates that can be referenced and included from ot
         name
         origin
         description
+
+        // others optional
     }
     page {
         // always, auto-generated

@@ -1,4 +1,48 @@
 html,
 body {
-	margin: 0;
+    margin: 0;
 }
+
+body {
+    font-family: sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+
+    --foreground: #111;
+    --background: #f8f8f8;
+}
+
+main {
+    width: calc(100% - 24px);
+    max-width: 800px;
+    margin: 2em auto;
+}
+
+header,
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header {
+    justify-content: space-between;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--foreground);
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav.left-nav a {
+    margin-right: 8px;
+}
+
+nav.right-nav a {
+    margin-left: 8px;
+}
+

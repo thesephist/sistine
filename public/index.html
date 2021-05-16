@@ -22,7 +22,22 @@
 
 	<article>
 		
-		<h1>Sistine builds websites.</h1><p>Sistine is a simple, productive, flexible static site generator built with the <a href="https://dotink.co">Ink programming language</a>.</p><h2>Features</h2><h3>Simple templating</h3><h3>Productive control</h3><h3>Extended Markdown support</h3><h2>Examples</h2>
+		<h1>Sistine, the static site engine</h1><p>Sistine is a simple, flexible, productive static site generator written in <a href="https://dotink.co/">Ink</a> and built on <a href="https://github.com/thesephist/merlot">Merlot</a>’s Markdown engine.</p><a class="button" href="/start/">Quick start &rarr;</a><h2>Features</h2><h3>Simple templating</h3><p>Here's the Sistine template for this very page.</p><pre><code>&lt;!doctype html>
+
+{{ -- head -- }}
+
+&lt;body>
+&lt;main>
+    {{ -- header -- }}
+
+    &lt;article>
+        {{ if page.title }}&lt;h1>{{ page.title }}&lt;/h1>{{ end }}
+        {{ page.content }}
+    &lt;/article>
+
+    {{ -- footer -- }}
+&lt;/main>
+&lt;/body></code></pre><h3>Productive control</h3><p>Sistine tries to give you as few primitives to learn and configure as reasonable. Unlike most static site generators, Sistine has no distinction between "list" and "article" pages. There's only one idea -- the <em>page</em>.</p><h3>Extended Markdown support</h3><h2>Examples</h2>
 	</article>
 
 	<footer>
