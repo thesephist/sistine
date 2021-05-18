@@ -214,7 +214,8 @@ generateDirective := (reader, params) => (
 					_ -> values
 				})
 				values := (sortKey := directive.by :: {
-					() -> values
+					` by default, things (usually pages) are sorted by path `
+					() -> sortBy(values, item => item.path)
 					_ -> sortBy(values, item => res := resolveParamValue(sortKey, item) :: {
 						() -> ''
 						_ -> res

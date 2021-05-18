@@ -77,6 +77,8 @@ Since I was focused on simplicity and hackability (and because Ink is ... slow),
 
 ### Out of the box RSS feed support
 
+I built Sistine primarily to replace other static site generators in my blogging. That means it needed good support for generating 
+
 ### Extended Markdown support
 
 Sistine's Markdown engine is borrowed from [Merlot](https://github.com/thesephist/merlot), an online Markdown editor written in Ink.
