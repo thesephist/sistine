@@ -45,6 +45,8 @@ Template parts are partial templates that can be referenced and included from ot
 
 - `{{ each foo [by bar] [asc|desc] }} X {{ else }} Y {{ end }}` if `foo` is not empty, loops through every value in list `foo` ordered by bar and renders X for each value; else renders Y
 
+- `{{ escape foo }}` escapes the value of variable `foo` for HTML
+
 - `{{ -- head -- }}` include the partial template `parts/head.html` here
 
 ### Template parameters

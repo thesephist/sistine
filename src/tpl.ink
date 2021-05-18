@@ -1,6 +1,7 @@
 std := load('../vendor/std')
 str := load('../vendor/str')
 quicksort := load('../vendor/quicksort')
+escape := load('../vendor/escape')
 
 log := std.log
 f := std.format
@@ -13,6 +14,7 @@ reverse := std.reverse
 split := str.split
 trim := str.trim
 sortBy := quicksort.sortBy
+escapeHTML := escape.html
 
 Reader := load('../vendor/reader').Reader
 
@@ -33,6 +35,7 @@ Directive := {
 	Each: iota()
 	End: iota()
 	Part: iota()
+	Escape: iota()
 }
 
 parseDirective := directive => (
@@ -63,6 +66,10 @@ parseDirective := directive => (
 		'--' -> {
 			type: Directive.Part
 			name: parts.1
+		}
+		'escape' -> {
+			type: Directive.Escape
+			value: parts.1
 		}
 		_ -> {
 			type: Directive.Display
@@ -156,6 +163,13 @@ generateDirective := (reader, params) => (
 		Directive.Display -> resolved := resolveParamValue(directive.value, params) :: {
 			() -> ''
 			_ -> string(resolved)
+		}
+		Directive.Escape -> resolved := resolveParamValue(directive.value, params) :: {
+			() -> ''
+			` Hugo seems to escape this part of the RSS data twice. I'm not
+			sure if this is strictly required, so we escape it once for now for
+			performance reasons. `
+			_ -> escapeHTML(string(resolved))
 		}
 		Directive.If -> (
 			ifBranch := generateReader(reader, params)

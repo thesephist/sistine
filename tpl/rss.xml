@@ -12,7 +12,7 @@
             <title>{{ if title }}{{ title }}{{ else }}{{ *.site.name }}{{ end }}</title>
             <link>{{ *.site.origin }}{{ path }}</link>
             <guid>{{ path }}</guid>
-            <description>{{ description }}</description>
+            <description>{{ escape description }}</description>
         </item>
         {{ end }}
     </channel>
