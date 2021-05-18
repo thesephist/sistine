@@ -83,3 +83,7 @@ Value of the `site` configuration is parsed directly from the `./config.json` fi
 
 Sistine's content system is powered by [Merlot](https://github.com/thesephist/merlot), a Markdown engine written in pure Ink. It attempts to be broadly compatible with GitHub and CommonMark specifications.
 
+## Development
+
+// TODO: build instructions, deploy instructions
+

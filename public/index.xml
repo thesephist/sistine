@@ -30,10 +30,10 @@
         </item>
         
         <item>
-            <title>Templating system</title>
-            <link>https://sistine.vercel.app/docs/tpl/</link>
-            <guid>/docs/tpl/</guid>
-            <description>The canonical reference manual for Sistine's templating language and system</description>
+            <title>Sistine internals</title>
+            <link>https://sistine.vercel.app/docs/internals/</link>
+            <guid>/docs/internals/</guid>
+            <description>How Sistine works, from inside out</description>
         </item>
         
         <item>
@@ -44,10 +44,24 @@
         </item>
         
         <item>
-            <title>Sistine internals</title>
-            <link>https://sistine.vercel.app/docs/internals/</link>
-            <guid>/docs/internals/</guid>
-            <description>How Sistine works, from inside out</description>
+            <title>Sistine Markdown</title>
+            <link>https://sistine.vercel.app/docs/markdown/</link>
+            <guid>/docs/markdown/</guid>
+            <description>The extra features that Sistine's Markdown parser supports, and where it deviates from the norm</description>
+        </item>
+        
+        <item>
+            <title>Directory structure</title>
+            <link>https://sistine.vercel.app/docs/tree/</link>
+            <guid>/docs/tree/</guid>
+            <description>Files and folders that live in a Sistine project, and what they all do</description>
+        </item>
+        
+        <item>
+            <title>Templating system</title>
+            <link>https://sistine.vercel.app/docs/tpl/</link>
+            <guid>/docs/tpl/</guid>
+            <description>The canonical reference manual for Sistine's templating language and system</description>
         </item>
         
     </channel>

@@ -4,7 +4,9 @@ title: Get started with Sistine
 
 Get started :)
 
-## Instal Sistine
+## Install Sistine
+
+clone repo, symlink executable? Like Go binaries.
 
 ## Set up a project
 
