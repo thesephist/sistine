@@ -67,11 +67,13 @@ Template parts are partial templates that can be referenced and included from ot
         index? // true if is an index page
         pages { name -> page } // for index pages, map of page names -> pages
 
-        // by convention
-        title
-        date
-        draft
+        // others optional
     }
+
+    // for iterable elements
+    i // index in iteration, starts at 0
+    * // parent param
+    _ // composite being iterated over
 }
 ```
 
