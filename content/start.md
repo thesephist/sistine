@@ -1,5 +1,5 @@
 ---
-title: Get started
+title: Get started with Sistine
 ---
 
 Get started :)

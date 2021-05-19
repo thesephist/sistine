@@ -2,17 +2,20 @@
 
 <head>
 	<title>Sistine</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
 <main>
-	<header>
+    <header>
 	<nav class="left-nav">
-		<a href="/">sistine</a>
-		<a href="/docs/">docs</a>
-		<a href="/start/">get started</a>
+        <a href="/"><strong>Sistine</strong></a>
+		<a href="/docs/">Docs</a>
+		<a href="/start/">Get started</a>
 	</nav>
 	<nav class="right-nav">
 		<a href="https://github.com/thesephist/sistine">GitHub</a>
@@ -20,27 +23,41 @@
 </header>
 
 
-	<article>
-		
-		<h1>Sistine, the static site engine</h1><p>Sistine is a simple, flexible, productive static site generator written in <a href="https://dotink.co/">Ink</a> and built on <a href="https://github.com/thesephist/merlot">Merlot</a>’s Markdown engine.</p><a class="button" href="/start/">Quick start &rarr;</a><h2>Features</h2><h3>Simple templating</h3><p>Here's the Sistine template for this very page.</p><pre><code>&lt;!doctype html>
+    <article>
+        
+        <h1><em>Sistine</em>, the static site engine</h1><p>Sistine is a simple, flexible, productive static site generator written in <a href="https://dotink.co/">Ink</a> and built on <a href="https://github.com/thesephist/merlot">Merlot</a>’s Markdown engine. This demo site is, of course, geneated by Sistine.</p><p class="button-group">
+<a class="button filled" href="https://github.com/thesephist/sistine" target="_blank">View source</a>
+<a class="button" href="/start/">Get started &rarr;</a>
+</p><h2>Features</h2><p>Sistine covers a lot of creative, expressive ground with a few powerful primitives. Simple templating based on a single page type, rich control over page customization with page variables, and an extended Markdown syntax.</p><h3>Simple templating</h3><p>Here's the Sistine template for the <a href="/docs/">docs</a> page.</p><pre><code data-lang="html">&lt;!doctype html>
 
 {{ -- head -- }}
 
 &lt;body>
 &lt;main>
-    {{ -- header -- }}
+  {{ -- header -- }}
 
-    &lt;article>
-        {{ if page.title }}&lt;h1>{{ page.title }}&lt;/h1>{{ end }}
-        {{ page.content }}
-    &lt;/article>
+  &lt;article>
+    {{ if page.title }}&lt;h1>{{ page.title }}&lt;/h1>{{ end }}
+    {{ page.content }}
+  &lt;/article>
 
-    {{ -- footer -- }}
+  {{ if page.pages }}
+  &lt;div class="postlist">
+    {{ each page.pages by order asc }}
+    &lt;h2>&lt;a class="postlist-link" href="{{ path }}">{{ title }}&lt;/a>&lt;/h2>
+    &lt;p>{{ description }}&lt;/p>
+    {{ end }}
+  &lt;/div>
+  {{ end }}
+
+  {{ -- footer -- }}
 &lt;/main>
-&lt;/body></code></pre><h3>Productive control</h3><p>Sistine tries to give you as few primitives to learn and configure as reasonable. Unlike most static site generators, Sistine has no distinction between "list" and "article" pages. There's only one idea -- the <em>page</em>.</p><h3>Extended Markdown support</h3><h2>Examples</h2>
-	</article>
 
-	<footer>
+{{ -- scripts -- }}
+&lt;/body></code></pre><ul><li>Here, <code>{{ -- head -- }}</code> is the template page.</li></ul><h3>Productive control</h3><p>Sistine tries to give you as few primitives to learn and configure as reasonable. Unlike most static site generators, Sistine has no distinction between "list" and "article" pages. There's only one idea -- the <em>page</em>.</p><h3>Extended Markdown support</h3><p>Sistine's Markdown engine is borrowed from <a href="https://github.com/thesephist/merlot">Merlot</a>, an online Markdown editor written in Ink.</p>
+    </article>
+
+    <footer>
 	<p>
 	Sistine is a project by
 	<a href="https://thesephist.com/" target="_blank">Linus</a>
@@ -50,4 +67,7 @@
 </footer>
 
 </main>
+
+<script src="/js/main.js"></script>
+
 </body>

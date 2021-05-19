@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Sistine</title>
+        <link>https://sistine.vercel.app</link>
+        <description>A static site builder written in Ink</description>
+        <language>en-us</language>
+        <generator>Sistine - sistine.vercel.app</generator>
+        <atom:link href="https://sistine.vercel.app/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Sistine</title>
+            <link>https://sistine.vercel.app/</link>
+            <guid>/</guid>
+            <description></description>
+        </item>
+        
+        <item>
+            <title>Get started with Sistine</title>
+            <link>https://sistine.vercel.app/start/</link>
+            <guid>/start/</guid>
+            <description></description>
+        </item>
+        
+        <item>
+            <title>Documentation</title>
+            <link>https://sistine.vercel.app/docs/</link>
+            <guid>/docs/</guid>
+            <description></description>
+        </item>
+        
+        <item>
+            <title>Templating system</title>
+            <link>https://sistine.vercel.app/docs/tpl/</link>
+            <guid>/docs/tpl/</guid>
+            <description>The canonical reference manual for Sistine's templating language and system</description>
+        </item>
+        
+        <item>
+            <title>Sistine CLI</title>
+            <link>https://sistine.vercel.app/docs/cli/</link>
+            <guid>/docs/cli/</guid>
+            <description>A catalog of the Sistine command line commands and options</description>
+        </item>
+        
+        <item>
+            <title>Sistine internals</title>
+            <link>https://sistine.vercel.app/docs/internals/</link>
+            <guid>/docs/internals/</guid>
+            <description>How Sistine works, from inside out</description>
+        </item>
+        
+    </channel>
+</rss>
+
