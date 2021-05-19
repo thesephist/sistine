@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.name }}</title>
+    <link>{{ site.origin }}</link>
+    <description>{{ site.description }}</description>
+    <language>en-us</language>
+    <generator>Sistine - sistine.vercel.app</generator>
+    <atom:link href="{{ site.origin }}/index.xml" rel="self" type="application/rss+xml" />
+    {{ each pages }}
+    <item>
+      <title>{{ if title }}{{ title }}{{ else }}{{ *.site.name }}{{ end }}</title>
+      <link>{{ *.site.origin }}{{ path }}</link>
+      <guid>{{ path }}</guid>
+      <description>{{ description }}</description>
+    </item>
+    {{ end }}
+  </channel>
+</rss>
+

@@ -11,6 +11,15 @@
 		{{ page.content }}
 	</article>
 
+	{{ if page.pages }}
+	<div class="postlist">
+		{{ each page.pages by order asc }}
+		<h2><a class="postlist-link" href="{{ path }}">{{ title }}</a></h2>
+		<p>{{ description }}</p>
+		{{ end }}
+	</div>
+	{{ end }}
+
 	{{ -- footer -- }}
 </main>
 

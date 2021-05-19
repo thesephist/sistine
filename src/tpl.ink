@@ -40,7 +40,10 @@ parseDirective := directive => (
 	parts.0 :: {
 		'if' -> {
 			type: Directive.If
-			cond: parts.1
+			cond: parts.2 :: {
+				'is' -> [parts.1, parts.3]
+				_ -> parts.1
+			}
 		}
 		'else' -> {
 			type: Directive.Else
@@ -174,13 +177,19 @@ generateDirective := (reader, params) => (
 				)
 			})
 
-			resolveParamValue(directive.cond, params) :: {
-				0 -> elseBranch
-				'' -> elseBranch
-				() -> elseBranch
-				{} -> elseBranch
-				false -> elseBranch
-				_ -> ifBranch
+			directive.cond :: {
+				[_, _] -> string(resolveParamValue(directive.cond.0, params)) :: {
+					directive.cond.1 -> ifBranch
+					_ -> elseBranch
+				}
+				_ -> resolveParamValue(directive.cond, params) :: {
+					0 -> elseBranch
+					'' -> elseBranch
+					() -> elseBranch
+					{} -> elseBranch
+					false -> elseBranch
+					_ -> ifBranch
+				}
 			}
 		)
 		Directive.Each -> values := resolveParamValue(directive.values, params) :: {
@@ -209,7 +218,11 @@ generateDirective := (reader, params) => (
 					each(range(0, len((restReader.readUntilEnd)()), 1), reader.back)
 
 					itemParts := map(values, (item, i) => (
-						generateReader(Reader(rest), item.i := i)
+						generateReader(Reader(rest), (
+							item.i := i
+							item.'_' := values
+							item.'*' := params
+						))
 					))
 					cat(itemParts, '')
 				)

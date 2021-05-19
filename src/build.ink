@@ -77,24 +77,31 @@ compileContentPage := file => (
 	next := reader.next
 	readUntil := reader.readUntil
 
+	` fallback content if cannot parse front matter `
+	default := () => {
+		words: len(split(file, ' '))
+		content: compileMarkdown(file)
+	}
+
 	(sub := () => next() :: {
-		'---' -> (
-			frontMatter := readUntil('---')
-			next() ` swallow --- `
+		'---' -> frontMatter := readUntil('---') :: {
+			() -> default()
+			_ -> (
+				next() ` swallow --- `
 
-			pageParams := {}
-			each(frontMatter, fmLine => (
-				colonIdx := index(fmLine, ':')
-				key := trim(slice(fmLine, 0, colonIdx), ' ')
-				value := trim(slice(fmLine, colonIdx + 1, len(fmLine)), ' ')
-				pageParams.(key) := value
-			))
+				pageParams := {}
+				each(frontMatter, fmLine => (
+					colonIdx := index(fmLine, ':')
+					key := trim(slice(fmLine, 0, colonIdx), ' ')
+					value := trim(slice(fmLine, colonIdx + 1, len(fmLine)), ' ')
+					pageParams.(key) := value
+				))
 
-			pageParams.content := compileMarkdown(cat((reader.readUntilEnd)(), Newline))
-		)
-		_ -> {
-			content: compileMarkdown(file)
+				pageParams.words := len(split(file, ' '))
+				pageParams.content := compileMarkdown(cat((reader.readUntilEnd)(), Newline))
+			)
 		}
+		_ -> default()
 	})()
 )
 
@@ -259,6 +266,19 @@ withSiteParams := siteParams => withParts(parts => (
 	siteParams.parts := parts
 
 	withCompiledContent(pages => (
+		` generate feeds `
+		rssTpl := TplDir + '/rss.xml'
+		readFile(rssTpl, file => file :: {
+			() -> err(f('could not read rss template "{{ 0 }}"', [rssTpl]))
+			_ -> (
+				log('[sistine] rss --( /rss.xml )-> /index.xml')
+				params := (clone(siteParams).pages := pages)
+				generated := generate(compile(file), params)
+				writePageToPublic('/index.xml', generated)
+			)
+		})
+
+		` generate content pages `
 		each(pages, page => (
 			params := (clone(siteParams).page := page)
 
