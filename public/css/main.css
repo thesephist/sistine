@@ -203,6 +203,32 @@ footer p a {
     font-style: italic;
 }
 
+/* breadcrumbs */
+
+.breadcrumbs {
+    margin-top: 4.25em;
+    margin-bottom: -4.25em;
+}
+
+.breadcrumbs a {
+    color: var(--secondary-text);
+    font-style: italic;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item::after {
+    content: ' · ';
+    margin: 0 .25em;
+}
+
+.breadcrumb-item:last-child::after {
+    content: none;
+}
+
 /* postlist */
 
 .postlist {

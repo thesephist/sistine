@@ -1,0 +1,12 @@
+{{ if page.roots.1 }}
+<div class="breadcrumbs">
+    {{ each page.roots }}
+		{{ if i is 0 }}
+		{{ else }}
+		<span class="breadcrumb-item">
+			<a href="{{ path }}">{{ title }}</a>
+		</span>
+		{{ end }}
+    {{ end }}
+</div>
+{{ end }}

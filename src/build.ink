@@ -154,7 +154,7 @@ withCompiledContent := cb => (
 		))
 	)
 
-	processFile := (filePath, cb) => dispatchJob(done => readFile(filePath, file => (
+	processFile := (filePath, rootPages, cb) => dispatchJob(done => readFile(filePath, file => (
 		file :: {
 			() -> err(f('could not read content file "{{ 0 }}"', [file]))
 			_ -> (
@@ -167,6 +167,7 @@ withCompiledContent := cb => (
 				page.contentPath := contentPath
 				page.index? := hasSuffix?(contentPath, '/index.md')
 				page.pages := {}
+				page.roots := rootPages
 
 				Pages.len(Pages) := page
 				cb(page)
@@ -175,7 +176,7 @@ withCompiledContent := cb => (
 		done()
 	)))
 
-	processDir := (dirPath, cb) => dispatchJob(
+	processDir := (dirPath, rootPages, cb) => dispatchJob(
 		done => dir(dirPath, evt => evt.type :: {
 			'error' -> (
 				err(f('could not read content dir "{{ 0 }}"', [dirPath]))
@@ -189,15 +190,20 @@ withCompiledContent := cb => (
 
 				indexFile :: {
 					() -> ()
-					_ -> processFile(dirPath + '/index.md', indexPage => (
+					_ -> processFile(dirPath + '/index.md', rootPages, indexPage => (
+						rootPages := clone(rootPages)
+						rootPages.len(rootPages) := indexPage
+
 						each(pageFiles, fileEnt => processFile(
 							dirPath + '/' + fileEnt.name
+							rootPages
 							page => indexPage.pages.trimSuffix(fileEnt.name, '.md') := page
 						))
 
 						dirs := filter(evt.data, ent => ent.dir)
 						each(dirs, dirEnt => processDir(
 							dirPath + '/' + dirEnt.name
+							rootPages
 							page => indexPage.pages.(dirEnt.name) := page
 						))
 
@@ -209,7 +215,7 @@ withCompiledContent := cb => (
 		})
 	)
 
-	processDir(ContentDir, page => ())
+	processDir(ContentDir, [], page => ())
 )
 
 ensureFileDirExistsThen := (fileName, cb) => (

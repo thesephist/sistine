@@ -68,6 +68,7 @@ Template parts are partial templates that can be referenced and included from ot
         content
         index? // true if is an index page
         pages { name -> page } // for index pages, map of page names -> pages
+        roots // parent pages, after root page down, like breadcrumbs
 
         // others optional
     }
