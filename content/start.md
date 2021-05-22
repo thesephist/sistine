@@ -23,9 +23,20 @@ Sistine currently doesn't have a simple installation method. We'll have to clone
 
 ```
 $ git clone https://github.com/thesephist/sistine
+Cloning into 'sistine'...
+remote: Enumerating objects: 207, done.
+remote: Counting objects: 100% (207/207), done.
+remote: Compressing objects: 100% (103/103), done.
+Receiving objects: 100% (207/207), 50.59 KiB | 2.66 MiB/s, done.
+remote: Total 207 (delta 85), reused 186 (delta 68), pack-reused 0
+Resolving deltas: 100% (85/85), done.
 ```
 
-clone repo, symlink executable? Like Go binaries.
+Once you have Ink installed in your `$PATH` and Sistine cloned, run `./sistine help` to check that it runs correctly.
+
+```
+$ sistine/sistine help
+```
 
 ## Set up a project
 

@@ -28,7 +28,14 @@
 
         <h1>Get started with Sistine</h1>
         <p>Let's build a simple static site with Sistine, from installation to deploy.</p><h2>Install Sistine</h2><p>This guide will show a lot of shell commands in code blocks. Whenever you see a line beginning with a <code>$</code>, it represents a command you need to type into your shell (except the leading <code>$</code>); other lines represent output, which might not match what you see exactly, but should be close enough to guide you.</p><h3>Prerequisite: install Ink</h3><p>Sistine is written in the <a href="https://dotink.co/">Ink programming language</a>. If you don't have Ink on your system, you'll need to <a href="https://dotink.co/docs/overview/#setup-and-installation">install it from a release on GitHub</a>. Sistine works on Ink releases v0.1.9 and up -- you can check the version of Ink you have by running <code>ink --version</code>.</p><pre><code>$ ink --version
-ink v0.1.9</code></pre><h3>Get Sistine from source</h3><p>Sistine currently doesn't have a simple installation method. We'll have to clone the source repository and run the program from the repository.</p><pre><code>$ git clone https://github.com/thesephist/sistine</code></pre><p>clone repo, symlink executable? Like Go binaries.</p><h2>Set up a project</h2><p>// TODO: might require a new <code>init</code> command in Sistine</p><h2>Customize</h2><h2>Deploy</h2>
+ink v0.1.9</code></pre><h3>Get Sistine from source</h3><p>Sistine currently doesn't have a simple installation method. We'll have to clone the source repository and run the program from the repository.</p><pre><code>$ git clone https://github.com/thesephist/sistine
+Cloning into 'sistine'...
+remote: Enumerating objects: 207, done.
+remote: Counting objects: 100% (207/207), done.
+remote: Compressing objects: 100% (103/103), done.
+Receiving objects: 100% (207/207), 50.59 KiB | 2.66 MiB/s, done.
+remote: Total 207 (delta 85), reused 186 (delta 68), pack-reused 0
+Resolving deltas: 100% (85/85), done.</code></pre><p>Once you have Ink installed in your <code>$PATH</code> and Sistine cloned, run <code>./sistine help</code> to check that it runs correctly.</p><pre><code>$ sistine/sistine help</code></pre><h2>Set up a project</h2><p>// TODO: might require a new <code>init</code> command in Sistine</p><h2>Customize</h2><h2>Deploy</h2>
     </article>
 
     <footer>

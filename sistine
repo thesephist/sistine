@@ -8,4 +8,4 @@ then
     exit
 fi
 
-./src/main.ink
+`dirname "$0"`/src/main.ink

@@ -305,7 +305,7 @@ withSiteParams := siteParams => withParts(parts => (
 ))
 
 main := () => readFile('./config.json', file => file :: {
-	() -> log('[sistine] could not read configuration file')
+	() -> log('[sistine] could not read the configuration file')
 	_ -> withSiteParams({
 		site: deJSON(file)
 	})
