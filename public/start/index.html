@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="/css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
 
@@ -35,7 +35,105 @@ remote: Counting objects: 100% (207/207), done.
 remote: Compressing objects: 100% (103/103), done.
 Receiving objects: 100% (207/207), 50.59 KiB | 2.66 MiB/s, done.
 remote: Total 207 (delta 85), reused 186 (delta 68), pack-reused 0
-Resolving deltas: 100% (85/85), done.</code></pre><p>Once you have Ink installed in your <code>$PATH</code> and Sistine cloned, run <code>./sistine help</code> to check that it runs correctly.</p><pre><code>$ sistine/sistine help</code></pre><h2>Set up a project</h2><p>// TODO: might require a new <code>init</code> command in Sistine</p><h2>Customize</h2><h2>Deploy</h2>
+Resolving deltas: 100% (85/85), done.</code></pre><p>Once you have Ink installed in your <code>$PATH</code> and Sistine cloned, run <code>./sistine help</code> to check that it runs correctly.</p><pre><code>$ cd sistine
+
+$ ./sistine help
+Sistine is a static site generator.
+
+Quick start
+	1. Place your Markdown content in content/
+	2. Add some templates to tpl/
+	3. Add your static assets to static/
+	4. Add a config.json with your site settings
+	5. Run `sistine` to build the site
+
+	More documentation at github.com/thesephist/sistine.
+
+Commands
+	build	build the current site
+	help	show this help message
+
+Sistine is a project by @thesephist built with Ink.</code></pre><p>If you see this help menu, you have a copy of Sistine on your system!</p><p>I usually add the Sistine repo to my <code>$PATH</code> or symlink a <code>sistine</code> command from my path to the executable in the repository, so I can run Sistine from anywhere on my computer with the <code>sistine</code> command.</p><h2>Set up a project</h2><p>Let's set up a basic Hello World blog with Sistine in a new directory. If you try to run a Sistine build in an empty repository, you'll get this error message</p><pre><code># create and enter a new directory for our blog site
+$ mkdir my-blog &amp;&amp; cd my-blog
+
+$ sistine build
+[sistine] error listing directory contents in dir(), open ./static: no such file or directory
+[sistine] could not read the configuration file</code></pre><p>Sistine looks for static files to copy from <code>./static</code> and a configuration file to start building site contents, so let's create those two, then re-run Sistine.</p><pre><code>$ mkdir static
+$ echo '{ "name": "My blog", "origin": "https://example.com" }' > config.json
+
+$ sistine build
+[sistine] could not read content dir "./content"
+[sistine] could not read rss template "./tpl/rss.xml"</code></pre><p>Sistine looks for Markdown files to publish in <code>./content</code>, and an (empty) RSS feed template in <code>./tpl/rss.xml</code>. Let's create those two, as well as a folder for our templates at <code>./tpl</code>.</p><pre><code>$ mkdir content tpl
+$ touch ./tpl/rss.xml
+
+$ sistine
+[sistine] rss --( /rss.xml )-> /index.xml</code></pre><p>This is our first successful build with Sistine!</p><p>The output from the <code>sistine</code> command (which is equivalent to <code>sistine build</code>) tells us it rendered an RSS feed with the <code>/rss.xml</code> template, to <code>/index.xml</code>. We'll see more output like this once we start rendering real pages to our website.</p><h3>Add a content page</h3><p>Let's add a content page for the home page of our site, at <code>content/index.md</code>. The file will have some metadata, and contain some Markdown, like this.</p><pre><code>---
+title: My Sistine blog
+date: 2021-05-22
+draft: true
+---
+
+Welcome to my _simple_ blog!</code></pre><p>We'll also have to add a template for our first, page -- otherwise, Sistine will tell us it couldn't <code>resolve template for "/index.md"</code>. Our template will look like this, and be placed in <code>tpl/index.html</code>.</p><pre><code>&lt;!doctype html>
+
+&lt;title>{{ page.title }}&lt;/title>
+
+&lt;body>
+    &lt;h1>{{ page.title }}&lt;/h1>
+    {{ page.content }}
+&lt;/body></code></pre><h3>Preview your site</h3><p>Let's now build this site, and serve it so we can preview our work so far! Sistine builds the static site into <code>./public</code>, which we can serve with Python's built-in HTTP server.</p><pre><code>$ sistine
+[sistine] rss --( /rss.xml )-> /index.xml
+[sistine] /index.md --( /index.html )-> /
+
+$ python3 -m http.server 10000 --directory ./public
+Serving HTTP on :: port 10000 (http://[::]:10000/) ...</code></pre><p>If you open your browser to <code>localhost:10000</code>, you should see your content file rendered through your template!</p><p><img alt="A browser window with the words "My Sistine blog" and "Welcome to my blog!"" src="/img/my-blog-screenshot.png"/></p><h2>Customize</h2><p>Let's add a little more to this example site with some customization to the template and style.</p><h3>Custom templates</h3><p>One customization we might make is to show a special warning message on content pages that are marked as <code>draft: true</code>. We can do this by modifying our <code>tpl/index.thml</code> template.</p><pre><code>&lt;!doctype html>
+
+&lt;title>{{ page.title }}&lt;/title>
+
+&lt;body>
+    &lt;h1>{{ page.title }}&lt;/h1>
+    {{ if page.draft }}
+        &lt;em>This post is a draft!&lt;/em>
+    {{ end }}
+    {{ page.content }}
+&lt;/body></code></pre><p><img alt="A browser window with the words "My Sistine blog", "This post is a draft!", and "Welcome to my blog!"" src="/img/my-blog-draft-screenshot.png"/></p><h3>Adding pages</h3><p>Adding another page, for example an "about" page, is as simple as creating another Markdown file in <code>./content</code>. Let's create <code>./content/about.md</code></p><pre><code>---
+title: About me
+date: 2021-05-22
+draft: false
+---
+
+Hi! My name is **Linus**.</code></pre><p>On the homepage, we may want to show a link to all the other pages on (the top level of) the blog. We can do this by looping through each item in <code>page.pages</code> in the <code>tpl/index.html</code> template.</p><pre><code>&lt;!doctype html>
+
+&lt;title>{{ page.title }}&lt;/title>
+
+&lt;body>
+    &lt;h1>{{ page.title }}&lt;/h1>
+    {{ if page.draft }}
+        &lt;em>This post is a draft!&lt;/em>
+    {{ end }}
+    {{ page.content }}
+
+    {{ each page.pages by date desc }}
+        &lt;p>&lt;a href="{{ path }}">{{ title }}&lt;/a>&lt;/p>
+    {{ end }}
+&lt;/body></code></pre><p>Here, we loop through each page in the children <code>pages</code> of the current (home) page, by descending order of dates, and render a link to each post. If we build and check for changes, we'll see a link to an about page, which leads us to an about page when we click on it.</p><pre><code>$ sistine build
+[sistine] rss --( /rss.xml )-> /index.xml
+[sistine] /index.md --( /index.html )-> /
+[sistine] /about.md --( /index.html )-> /about/</code></pre><p><img alt="A browser window with the same site as before, but with an "About me" link" src="/img/my-blog-about-screenshot.png"/></p><h3>Adding static files</h3><p>To add some styles to our blog, we need to create and include a style link tag. Rather than keep adding to our single template, let's split off the <code>&lt;head></code> part of our templates into a <em>partial template</em> so we can reuse it in other templates. To do this, we can create a <code>./tpl/parts/head.html</code> like the following</p><pre><code>&lt;head>
+    &lt;title>{{ page.title }}&lt;/title>
+    &lt;link rel="stylesheet" href="/css/main.css">
+&lt;/head></code></pre><p>Back in our main template, we can include this partial template with the <code>{{ -- template_name -- }}</code> directive.</p><pre><code>&lt;!doctype html>
+
+{{ -- head -- }}
+
+&lt;body>
+    &lt;h1>{{ page.title }}&lt;/h1>
+
+[...]</code></pre><p>Lastly, we create a basic stylesheet at <code>./static/css/main.css</code></p><pre><code>body {
+    font-family: system-ui, sans-serif;
+    margin: 2em auto;
+    max-width: 800px;
+    width: calc(100% - 24px);
+}</code></pre><p>If we build with <code>sistine build</code> once again and refresh our browser, we'll see that our CSS stylesheet is being loaded.</p><p><img alt="A browser window with the same site as before, but cleaner style" src="/img/my-blog-styled-screenshot.png"/></p><h2>Deploy &amp; next steps</h2><p>Once you have a static site built, you'll want to deploy it somewhere. I've found <a href="https://vercel.com">Vercel</a>, <a href="https://pages.github.com/">GitHub pages</a>, and <a href="https://netlify.com">Netlify</a> all excellent for hosting static sites and automatically deploying them from within a GitHub repository.</p><p>For more examples on how to build a non-trivial site with Sistine, this documentation website is <a href="https://github.com/thesephist/sistine">open source on GitHub</a>, from the content to the template and stylesheets. And of course, detailed documentation on template directives and the rest of Sistine is available in other pages in the <a href="/docs/">documentation</a> list.</p>
     </article>
 
     <footer>
