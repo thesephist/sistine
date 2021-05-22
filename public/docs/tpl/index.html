@@ -40,7 +40,32 @@
 
 
         <h1>Templating system</h1>
-        <p>Templating system ref.</p><h2>Templating language and directives</h2><h2>Page template variables</h2><h2>Template resolution order</h2>
+        <p>Sistine's page templates are text files (usually HTML files) with extra template directives modeled after Ink's <code>std.format</code> at a high level, with standard page variables and conditional formatting instructions.</p><p>A page in Sistine is a Markdown file in <code>./content</code>. A Sistine page renders once to a single template that is resolved in the following order.</p><ol><li>A template at the same directory path and name as the content file, ignoring file extensions.</li><li>If an <code>index.md</code> file, the template with the name of the directory for which it is the index</li><li><code>index.html</code> in the same directory path as the content file</li><li><code>tpl/index.html</code>, the root template</li></ol><h2>Templating language and directives</h2><ul><li><code>{{ foo.bar }}</code> resolves to the value of <code>bar</code> in the object <code>foo</code> in the page parameters</li></ul><ul><li><code>{{ if foo }} X {{ else }} Y {{ end }}</code> renders X if value <code>foo</code> is true, <code>Y</code> otherwise</li></ul><ul><li><code>{{ each foo [by bar] [asc|desc] }} X {{ else }} Y {{ end }}</code> if <code>foo</code> is not empty, loops through every value in list <code>foo</code> ordered by bar and renders X for each value; else renders Y</li></ul><ul><li><code>{{ escape foo }}</code> escapes the value of variable <code>foo</code> for HTML</li></ul><ul><li><code>{{ -- head -- }}</code> include the partial template <code>parts/head.html</code> here</li></ul><h2>Page template variables</h2><pre><code data-lang="ink">{
+    site {
+        name
+        origin
+        description
+
+        // others optional
+    }
+    page {
+        // always, auto-generated
+        path
+        publicPath
+        contentPath
+        content
+        index? // true if is an index page
+        pages { name -> page } // for index pages, map of page names -> pages
+        roots // parent pages, after root page down, like breadcrumbs
+
+        // others optional
+    }
+
+    // for iterable elements
+    i // index in iteration, starts at 0
+    * // parent param
+    _ // composite being iterated over
+}</code></pre><p>Value of the <code>site</code> configuration is parsed directly from the <code>./config.json</code> file at the root of the project.</p><h2>Partial templates</h2><p>Template parts are partial templates that can be referenced and included from other templates. They live in <code>tpl/parts</code>.</p><h2>Template resolution and rendering rules</h2><p>In every directory in <code>content/</code>, there are</p><ul><li>Folders, which are compiled to directories in <code>public/</code> of the same name and compiled descendants</li><li>Files, which if named <code>index.md</code> are compild to <code>index.html</code> and if not, are compiled to <code>{{ filename }}/index.html</code></li></ul>
     </article>
 
     <footer>

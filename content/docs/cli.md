@@ -4,10 +4,8 @@ order: 0
 description: A catalog of the Sistine command line commands and options
 ---
 
-Sistine is distributed as a single command-line utility called `sistine`, written in Ink.
+Sistine is distributed as a single command-line utility called `sistine`, written in Ink. You can find a bash script that invokes it in the repository as `/sistine`. The script errors and bails if Ink is not found on the system `$PATH`.
 
-By default, running `sistine` runs `sistine build` in the current directory to build the static site to `public/`.
+**`sistine build`** builds the static site described and configured in the current folder into `./public`. If any necessary files or folders cannot be found, it will error. This is the default command that runs when `sistine` is invoked without any arguments.
 
-`sistine build`
-
-`sistine help`
+**`sistine help`** prints the help menu in the CLI and exits.
