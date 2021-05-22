@@ -7,7 +7,7 @@ log := std.log
 HelpMessage := 'Sistine is a static site generator.
 
 Quick start
-	1. Place your Markdown content at content/
+	1. Place your Markdown content in content/
 	2. Add some templates to tpl/
 	3. Add your static assets to static/
 	4. Add a config.json with your site settings

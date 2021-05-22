@@ -196,12 +196,21 @@ generateDirective := (reader, params) => (
 					directive.cond.1 -> ifBranch
 					_ -> elseBranch
 				}
+				` it may seem better to match against the string()-transformed
+				version of the resolved param value, but frequently in Sistine
+				the param value may be an object witih circular references,
+				which cannot be safely serialized to a string. So we compare
+				against raw values instead, exhaustively. `
 				_ -> resolveParamValue(directive.cond, params) :: {
-					0 -> elseBranch
 					'' -> elseBranch
+					0 -> elseBranch
+					'0' -> elseBranch
 					() -> elseBranch
+					'()' -> elseBranch
 					{} -> elseBranch
+					'{}' -> elseBranch
 					false -> elseBranch
+					'false' -> elseBranch
 					_ -> ifBranch
 				}
 			}
