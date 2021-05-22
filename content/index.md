@@ -7,14 +7,6 @@ Sistine is a **simple, flexible, productive** static site generator written enti
 <a class="button" href="/start/">Get started &rarr;</a>
 </p>
 
-## Overview
-
-// TODO:
-    `sistine new`
-    Create content
-    run
-    publish
-
 ## Features
 
 Like all my [side projects](https://thesephist.com/projects/), _Sistine_ is ultimately built for me to use and hack on for building my static websites. If there are idiosyncratic features, those appeal to my idiosyncrasies, and if there are missing features, they're probably features I don't need. Sistine is open source for the curious, but not necessarily open-roadmap. With that in mind...
@@ -66,19 +58,23 @@ You can find the full list and documentation of Sistine's templating features in
 
 Over time, all static site generators accumulate features that make the build process difficult to understand and "see through". By that, I mean that for many static site generators, we can't hold in our minds all the steps that happen conceptually when we run a build.
 
-Since I was focused on simplicity and hackability (and because Ink is ... slow), I wanted to keep the build process conceptually light with few, clear steps. This results in a static site generator that gets a lot done with very few steps. When you run `sistine build`, three things happen:
+Since I was focused on simplicity and hackability (and because Ink is ... slow), I wanted to keep the build process conceptually light with few, clear steps. This results in a static site generator that gets a lot done with very few steps. When you run `sistine build`, only five things happen in order.
 
-1. Read and parse the site configuration defined in `config.json`
-2. Read and parse the "content pages" for the site under `./content`
-3. For each page: use the page's path to [resolve to a template](/docs/tpl/)
+1. Copy over all the static files from `./static`
+2. Read and parse the site configuration defined in `config.json`
+3. Read and parse the "content pages" for the site under `./content`
+4. For each content page...
+    - Use the page's path to [resolve a template](/docs/tpl/) and render that page from the template
+    - Render that page into a file in `./public`
+5. Render the RSS feed from the  `rss.xml` template
 
-// TODO here :)
+This makes Sistine-generated sites easy to debug, and templates easier to write.
 
 ### Rich page customization with custom parameters
 
-Each Sistine page template gets access to a rich set of default variables to render a page, including access to all of its children and parent pages. In addition, each page can easily define (through the Markdown front matter) its own set of variables to further customize a page.
+Each Sistine page template gets access to a rich set of default variables to render a page, including access to all of its children and parent pages. In addition, each page can easily define (through the [Markdown front matter](/docs/markdown/)) its own set of variables to further customize a page.
 
-For example, documentation pages on this site have fully customized breadcrumbs, implemented in a simple partial template
+For example, documentation pages on this site have fully customized breadcrumbs, implemented in a simple partial template rather than a separate plugin:
 
 ```html
 {{ if page.roots.1 }}
@@ -97,5 +93,17 @@ For example, documentation pages on this site have fully customized breadcrumbs,
 
 ### Out of the box RSS feed support
 
-I built Sistine primarily to replace other static site generators in my blogging. That means it needed good support for generating 
+I built Sistine primarily to replace other static site generators in my blogging. That means it needed good first-class support for generating site-wide RSS feeds. The `rss.xml` template in `./tpl` gets handed a `pages` list with all pages on the site.
+
+## Progress
+
+Sistine, like most of my side projects, is a work in progress. It's currently quite stable and featureful enough to build some of my blogs, but not my main website (which uses some custom Hugo features like date formatting and custom functions). Sistine is also currently not very fast, because performance was not a goal of the first release. In addition to performance work, some focuses of upcoming releases include
+
+- Support for blog-specific data formats like reading time, word count, and date/time formatting
+- Table of contents (and perhaps sitemap?) support
+- Better error messages for mis-parsed and invalid templates
+- Syntax highlighting on code blocks
+- Support for more Markdown features, blocked on their support in the [Merlot](https://github.com/thesephist/merlot) project
+
+Given that it's currently quite slow and written in Ink, you probably shouldn't use it for anything important. But if you are interested, and want to ask questions about how it works or what's coming next, feel free to [reach out on Twitter](https://twitter.com/thesephist) or file a [GitHub issue](https://github.com/thesephist/sistine/issues) on the repository.
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Checks if ink is installed in $PATH, and bails if not
+if ! command -v ink &> /dev/null
+then
+    echo "[sistine] could not find Ink on your system"
+    echo "[sistine] install it at dotink.co."
+    exit
+fi
+
+./src/main.ink
