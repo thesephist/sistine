@@ -140,6 +140,12 @@ article pre code {
     padding: 1em;
 }
 
+article blockquote {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 4px solid var(--active-bg);
+}
+
 article hr {
     margin: 52px 0;
 }
