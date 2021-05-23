@@ -3,7 +3,7 @@
     <channel>
         <title>Sistine</title>
         <link>https://sistine.vercel.app</link>
-        <description>A static site builder written in Ink</description>
+        <description>A simple, flexible, productive static site engine written in Ink</description>
         <language>en-us</language>
         <generator>Sistine - sistine.vercel.app</generator>
         <atom:link href="https://sistine.vercel.app/index.xml" rel="self" type="application/rss+xml" />
