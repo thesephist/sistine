@@ -41,17 +41,17 @@ $ ./sistine help
 Sistine is a static site generator.
 
 Quick start
-	1. Place your Markdown content in content/
-	2. Add some templates to tpl/
-	3. Add your static assets to static/
-	4. Add a config.json with your site settings
-	5. Run `sistine` to build the site
+    1. Place your Markdown content in content/
+    2. Add some templates to tpl/
+    3. Add your static assets to static/
+    4. Add a config.json with your site settings
+    5. Run `sistine` to build the site
 
-	More documentation at github.com/thesephist/sistine.
+    More documentation at github.com/thesephist/sistine.
 
 Commands
-	build	build the current site
-	help	show this help message
+    build    build the current site
+    help    show this help message
 
 Sistine is a project by @thesephist built with Ink.
 ```

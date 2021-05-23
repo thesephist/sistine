@@ -95,7 +95,7 @@ For example, documentation pages on this site have fully customized breadcrumbs,
 
 I built Sistine primarily to replace other static site generators in my blogging. That means it needed good first-class support for generating site-wide RSS feeds. The `rss.xml` template in `./tpl` gets handed a `pages` list with all pages on the site.
 
-## Progress
+## Current progress
 
 Sistine, like most of my side projects, is a work in progress. It's currently quite stable and featureful enough to build some of my blogs, but not my main website (which uses some custom Hugo features like date formatting and custom functions). Sistine is also currently not very fast, because performance was not a goal of the first release. In addition to performance work, some focuses of upcoming releases include
 
