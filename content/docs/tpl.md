@@ -5,7 +5,7 @@ starred: true
 description: The canonical reference manual for Sistine's templating language and system
 ---
 
-Sistine's main job is to take each page from the content directory and render it into a full HTML page using a _template_. Sistine's page templates are HTML files with extra template directives modeled after Ink's `std.format` function, with standard page variables and extra formatting instructions. The rest of this page details this templating system, and how Sistine finds these templates.
+Sistine's main job is to take each page from the content directory and render it into a full HTML page using a _template_. Sistine's page templates are HTML files with extra template directives modeled after Ink's `std.format` function. The rest of this page details this templating system, and how Sistine finds these templates.
 
 ## Templating language and directives
 
@@ -36,7 +36,7 @@ The following are all valid.
 - `{{ foo.bar.2 }}` (prints `30`)
 - `{{ foo.baz.quux }}`
 
-Accessing an undefined or null value will not error -- it will simply render an empty string.
+Accessing an undefined or null value will not error -- it will simply render an empty string. This behavior is nice for dealing with optional values, like `page.draft` which may be usually false.
 
 ### Conditional if/else expressions
 
@@ -72,10 +72,10 @@ If `foo` is not empty, this directive loops through every value in the list or o
 {{ end }}
 ```
 
-Besides the properties that are normally a part of each value in the list, within each `{{ each }}` section, the template has access to three special variables:
+Besides the properties that are normally a part of each value in the list, within each `{{ each }}` section, a template has access to three special variables:
 
 - `i` is the index in the loop, starting at 0
-- `*` is the template parameter immediately outside the loop, useful for accessing out-of-scope variables from within the loop
+- `*` is the template parameter immediately outside the loop, useful for accessing out-of-scope variables from within the loop like `{{ *.site.name }}`
 - `_` is the parent value, _i.e._ the thing being iterated over
 
 ### Escaping for HTML
@@ -97,26 +97,24 @@ This will invoke Sistine to search for this partial template in `./tpl/parts/hea
 All page templates are passed a dictionary with values for:
 
 - `site`, containing site-wide metadata, imported from `./config.json`
-- `page`, containing data about that specific page, including URLS, file paths, the rendered Markdown content, child and parent pages, and any other parameters defined for the page in the page's [front matter](/tpl/markdown/)
+- `page`, containing data about that specific page, including URLS, file paths, the rendered Markdown content, child and parent pages, and any other parameters defined for the page in the page's [front matter](/docs/markdown/)
 
 In general, a template begins rendering with these variables, plus any user-defined ones.
 
 ```ink
-{
-    site {
-        name
-        origin
-        description
-    }
-    page {
-        path // URL of the page
-        publicPath // path to file in ./public
-        contentPath // path to file in ./content
-        content // compiled Markdown content
-        index? // true if is an index page, else false
-        pages { name -> page } // for index pages, map of page names -> pages
-        roots // parent pages, from the root (/) page down, like breadcrumbs
-    }
+site {
+    name
+    origin
+    description
+}
+page {
+    path // URL of the page
+    publicPath // path to file in ./public
+    contentPath // path to file in ./content
+    content // compiled Markdown content
+    index? // true if is an index page, else false
+    pages: { name -> page } // for index pages, map of page names -> pages
+    roots: page[] // parent pages, from the root (/) page down, like breadcrumbs
 }
 ```
 
@@ -135,4 +133,6 @@ Every Sistine page renders once to a single template that is resolved in the fol
 2. If an `index.md` file, the template with the name of the directory for which it is the index. For example, `./tpl/foo.md` for `./content/foo/index.md`. Non-index files skip this step.
 3. `index.html` in the same directory path as the content file.
 4. `tpl/index.html`, the root page template.
+
+If no appropriate option is found after looking in these four places for any given content page, Sistine will generate an error for that page in the CLI output.
 

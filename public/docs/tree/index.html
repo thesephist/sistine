@@ -40,7 +40,7 @@
 
 
         <h1>Directory structure</h1>
-        <p>In a typical Sistine project, you'll find a file hierarchy that looks something like this (borrowed from the <a href="/start/">Get started</a> page).</p><pre><code>├── config.json
+        <p>In a typical Sistine project, you'll find a file hierarchy that looks something like this (borrowed from the example site in the <a href="/start/">Get started</a> page).</p><pre><code>├── config.json
 ├── content
 │   ├── about.md
 │   └── index.md
@@ -58,7 +58,7 @@
     ├── index.html
     ├── parts
     │   └── head.html
-    └── rss.xml</code></pre><p>The <code>config.json</code> file defines the top-level variables for your site, like the site name and domain. You can also add arbitrary JSON data to this configuration file to access from page templates.</p><p><code>./content</code> contains all <em>content pages</em>, authored in Markdown with front matter. Each of these pages gets rendered to exactly one output file in the final static site. Any subdirectories in this content folder are considered distinct "sections" to the site by Sistine, and the index page of each section will have access to all of its children pages.</p><p><code>./public</code> is the destination folder where Sistine will place the output of a build. When deploying a Sistine site, you can deploy the contents of <code>./public</code> to a file server.</p><p><code>./static</code> stores all the static (non-content) files of the site. Everything in the static folder will be copied to the public folder before any content rendering takes place.</p><p><code>./tpl</code> stores all page templates for the site, and generally mirrors the structure of the content folder. You can read about template files in the <a href="/docs/tpl/">templating system documentation</a>.</p>
+    └── rss.xml</code></pre><p>The <code>config.json</code> file defines the top-level variables for your site, like the site name and domain. You can also add arbitrary JSON data to this configuration file to access it from page templates.</p><p><code>./content</code> contains all <em>content pages</em>, authored in Markdown with front matter. Each of these pages gets rendered to exactly one output file in the final static site. Any subdirectories in this content folder are considered distinct "sections" to the site by Sistine, and the index page of each section will have access to all of its children pages.</p><p><code>./public</code> is the destination folder where Sistine will place the output of a build. When deploying a Sistine site, you can deploy the contents of <code>./public</code> to a file server.</p><p><code>./static</code> stores all the static (non-content) files of the site. Everything in the static folder will be copied to the public folder before any content rendering takes place.</p><p><code>./tpl</code> stores all page templates for the site, and generally mirrors the structure of the content folder. You can read about template files in the <a href="/docs/tpl/">templating system documentation</a>.</p>
     </article>
 
     <footer>

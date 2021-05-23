@@ -4,10 +4,10 @@ order: 3
 description: The extra features that Sistine's Markdown parser supports, and where it deviates from the norm
 ---
 
-Sistine's Markdown engine comes from the [Merlot](https://github.com/thesephist/merlot) Markdown editor web app. As a result, every Markdown feature supported by Merlot is supported in Sistine, and the ones not yet supported in Merlot are not yet here in Sistine, either. Most features of standard Markdown are supported, however, including
+Sistine's Markdown engine comes from the [Merlot](https://github.com/thesephist/merlot) Markdown editor. As a result, every Markdown feature supported by Merlot is supported in Sistine, and the ones not yet supported in Merlot are not yet here in Sistine, either. Most features of standard Markdown are supported, however, including
 
 - Inline markup: _italic_, **bold**, ~strikethrough~, `monospace`
-- Bulleted and numbered lists
+- Bulleted and numbered lists nested to arbitrary depths
 - Code blocks with `\`\`\``
 - Block quotes with `>`
 - Headings beginning with a number of `#`s
@@ -20,7 +20,7 @@ Notable features that are not yet supported include
 - Code block syntax highlighting
 - Multi-paragraph list items
 
-I will probably add them to Merlot (and thus Sistine) as I need those features out of these apps.
+I will probably add them to Merlot (and thus Sistine) as I come to need those features out of these apps.
 
 ## Front matter in content pages
 
@@ -38,5 +38,7 @@ description: The extra features ...
 
 Front matter should always begin and end with three dashes. if a particular page does not need any page variables, it may omit the front matter entirely, and the entire page will be parsed as simple Markdown.
 
-Every key in the front matter of a content page defines a [page variable](/docs/tpl/) for Sistine templates to use when rendering. All variables are parsed and treated as raw strings. In other words the `order` variable of this page is the string "3".
+Note that unlike in most popular static site generators, front matter in Sistine do not support the full YAML syntax -- they're simply `key: value` pairs between triple dashes.
+
+Every key in the front matter of a content page defines a [page variable](/docs/tpl/) for Sistine templates to use when rendering that page. All variables are parsed and treated as raw strings. In other words the `order` variable of this page is the string "3".
 

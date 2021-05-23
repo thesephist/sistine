@@ -62,12 +62,16 @@ I usually add the Sistine repo to my `$PATH` or symlink a `sistine` command from
 
 ## Set up a project
 
-Let's set up a basic Hello World blog with Sistine in a new directory. If you try to run a Sistine build in an empty repository, you'll get this error message
+Let's set up a basic Hello World blog with Sistine in a new directory.
 
 ```
 # create and enter a new directory for our blog site
 $ mkdir my-blog && cd my-blog
+```
 
+If you try to run a Sistine build in an empty repository, you'll get this error message:
+
+```
 $ sistine build
 [sistine] error listing directory contents in dir(), open ./static: no such file or directory
 [sistine] could not read the configuration file
@@ -84,7 +88,7 @@ $ sistine build
 [sistine] could not read rss template "./tpl/rss.xml"
 ```
 
-Sistine looks for Markdown files to publish in `./content`, and an (empty) RSS feed template in `./tpl/rss.xml`. Let's create those two, as well as a folder for our templates at `./tpl`.
+Sistine looks for Markdown files to publish in `./content`, and an (empty) RSS feed template in `./tpl/rss.xml`. Let's create those two, as well as a folder for our templates at `./tpl`. Then we re-run Sistine.
 
 ```
 $ mkdir content tpl
@@ -94,7 +98,7 @@ $ sistine
 [sistine] rss --( /rss.xml )-> /index.xml
 ```
 
-This is our first successful build with Sistine!
+This is our first successful build!
 
 The output from the `sistine` command (which is equivalent to `sistine build`) tells us it rendered an RSS feed with the `/rss.xml` template, to `/index.xml`. We'll see more output like this once we start rendering real pages to our website.
 
@@ -109,7 +113,7 @@ date: 2021-05-22
 draft: true
 ---
 
-Welcome to my _simple_ blog!
+Welcome to my _blog_!
 ```
 
 We'll also have to add a template for our first, page -- otherwise, Sistine will tell us it couldn't `resolve template for "/index.md"`. Our template will look like this, and be placed in `tpl/index.html`.
@@ -125,9 +129,11 @@ We'll also have to add a template for our first, page -- otherwise, Sistine will
 </body>
 ```
 
+This template represents a minimal HTML page with a title from the page's title field, a header with the page title, and the compiled Markdown contents of this page.
+
 ### Preview your site
 
-Let's now build this site, and serve it so we can preview our work so far! Sistine builds the static site into `./public`, which we can serve with Python's built-in HTTP server.
+Let's now build this site, and serve it so we can preview our work so far! Sistine builds the static site into `./public`, which we can serve with Python's built-in HTTP server if you have Python installed.
 
 ```
 $ sistine
@@ -144,11 +150,11 @@ If you open your browser to `localhost:10000`, you should see your content file 
 
 ## Customize
 
-Let's add a little more to this example site with some customization to the template and style.
+Let's add a little more to this example site by adding a post, and updating some template styles.
 
 ### Custom templates
 
-One customization we might make is to show a special warning message on content pages that are marked as `draft: true`. We can do this by modifying our `tpl/index.thml` template.
+One customization we might make is to show a special warning message on content pages that are marked as `draft: true`. We can do this by modifying our `tpl/index.html` template.
 
 ```
 <!doctype html>
@@ -180,7 +186,7 @@ draft: false
 Hi! My name is **Linus**.
 ```
 
-On the homepage, we may want to show a link to all the other pages on (the top level of) the blog. We can do this by looping through each item in `page.pages` in the `tpl/index.html` template.
+On the homepage, we may want to show a link to all the other pages on (the top level of) the blog. We can do this by looping through each item in `page.pages` in the `tpl/index.html` template, like this:
 
 ```
 <!doctype html>
@@ -200,7 +206,7 @@ On the homepage, we may want to show a link to all the other pages on (the top l
 </body>
 ```
 
-Here, we loop through each page in the children `pages` of the current (home) page, by descending order of dates, and render a link to each post. If we build and check for changes, we'll see a link to an about page, which leads us to an about page when we click on it.
+Here, we loop through each page in the children `pages` of the current (home) page, by descending order of dates, and render a link to each post. If we build and refresh the browser, we'll see a link to an about page, which leads us to an about page when we click on it.
 
 ```
 $ sistine build
@@ -222,7 +228,7 @@ To add some styles to our blog, we need to create and include a style link tag. 
 </head>
 ```
 
-Back in our main template, we can include this partial template with the `{{ -- template_name -- }}` directive.
+Back in our main template, we can include this partial template with the partial template syntax, like `{{ -- head -- }}`.
 
 ```
 <!doctype html>
@@ -254,5 +260,5 @@ If we build with `sistine build` once again and refresh our browser, we'll see t
 
 Once you have a static site built, you'll want to deploy it somewhere. I've found [Vercel](https://vercel.com), [GitHub pages](https://pages.github.com/), and [Netlify](https://netlify.com) all excellent for hosting static sites and automatically deploying them from within a GitHub repository.
 
-For more examples on how to build a non-trivial site with Sistine, this documentation website is [open source on GitHub](https://github.com/thesephist/sistine), from the content to the template and stylesheets. And of course, detailed documentation on template directives and the rest of Sistine is available in other pages in the [documentation](/docs/) list.
+For more examples on how to build a non-trivial site with Sistine, this documentation website is [open source on GitHub](https://github.com/thesephist/sistine), from the content to the template and stylesheets. And of course, detailed documentation on template directives and the rest of Sistine is available in other pages in the [documentation](/docs/) section of this site.
 
