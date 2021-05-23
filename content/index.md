@@ -104,7 +104,6 @@ Sistine, like most of my side projects, is a work in progress. It's currently qu
 - Better error messages for mis-parsed and invalid templates
 - Syntax highlighting on code blocks
 - Support for more Markdown features, blocked on their support in the [Merlot](https://github.com/thesephist/merlot) project
-- Support for more complex expressions in template directives, like comparisons (`>`, `<`) in if/else
 
 Given that it's currently quite slow and written in Ink, you probably shouldn't use it for anything important. But if you are interested, and want to ask questions about how it works or what's coming next, feel free to [reach out on Twitter](https://twitter.com/thesephist) or file a [GitHub issue](https://github.com/thesephist/sistine/issues) on the repository.
 

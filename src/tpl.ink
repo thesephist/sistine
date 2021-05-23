@@ -6,6 +6,7 @@ escape := load('../vendor/escape')
 log := std.log
 f := std.format
 range := std.range
+slice := std.slice
 cat := std.cat
 map := std.map
 each := std.each
@@ -58,6 +59,11 @@ parseDirective := directive => (
 			order: parts.4 :: {
 				'desc' -> 'desc'
 				_ -> 'asc'
+			}
+			limit: limit := number(parts.5) :: {
+				0 -> ()
+				() -> ()
+				_ -> limit
 			}
 		}
 		'end' -> {
@@ -237,6 +243,10 @@ generateDirective := (reader, params) => (
 				values := (directive.order :: {
 					'asc' -> values
 					_ -> reverse(values)
+				})
+				values := (directive.limit :: {
+					() -> values
+					_ -> slice(values, 0, directive.limit)
 				})
 
 				eachBranch := (

@@ -55,14 +55,14 @@ An idiomatic trick is to check `{{ if page.some_list }}...{{ end }}` to check wh
 The loop directive is a bit more complex. The full form looks like the following, where the parts in square brackets are optional.
 
 ```
-{{ each foo [by bar] [asc|desc] }}
+{{ each foo [by bar] [asc|desc] [limit] }}
     X
 {{ else }}
     Y
 {{ end }}
 ```
 
-If `foo` is not empty, this directive loops through every value in the list or object `foo` ordered by each item's property `bar` and renders X for each value; if the list is empty, this renders Y. For example, a common format for a reverse-chronological blog post listing page may include
+If `foo` is not empty, this directive loops through every value in the list or object `foo` ordered by each item's property `bar` and renders X for each value; if the list is empty, this renders Y. The `asc|desc` declaration determines whether the sort is in ascending or descending order, and `limit` is the optional, maximum number of items to be looped through, like a limit clause in SQL. They are optional, but a limit must follow an asc/desc declaration. For example, a common format for a reverse-chronological blog post listing page may include
 
 ```
 {{ each page.pages by date desc }}
