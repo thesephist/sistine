@@ -225,72 +225,74 @@ generateDirective := (reader, params) => (
 				}
 			}
 		)
-		Directive.Each -> values := resolveParamValue(directive.values, params) :: {
-			() -> ''
-			_ -> (
-				values := (values.0 :: {
-					() -> map(keys(values), key => values.(key))
-					_ -> values
-				})
-				values := (sortKey := directive.by :: {
-					` by default, things (usually pages) are sorted by path `
-					() -> sortBy(values, item => item.path)
-					_ -> sortBy(values, item => res := resolveParamValue(sortKey, item) :: {
-						() -> ''
-						_ -> res
-					})
-				})
-				values := (directive.order :: {
-					'asc' -> values
-					_ -> reverse(values)
-				})
-				values := (directive.limit :: {
-					() -> values
-					_ -> slice(values, 0, directive.limit)
-				})
+		Directive.Each -> (
+			values := (resolved := resolveParamValue(directive.values, params) :: {
+				() -> []
+				_ -> resolved
+			})
 
-				eachBranch := (
-					rest := readUntilEnd()
-					restReader := Reader(rest)
-					generateReader(restReader, {
-						parts: params.parts
-					})
-					each(range(0, len((restReader.readUntilEnd)()), 1), reader.back)
+			values := (values.0 :: {
+				() -> map(keys(values), key => values.(key))
+				_ -> values
+			})
+			values := (sortKey := directive.by :: {
+				` by default, things (usually pages) are sorted by path `
+				() -> sortBy(values, item => item.path)
+				_ -> sortBy(values, item => res := resolveParamValue(sortKey, item) :: {
+					() -> ''
+					_ -> res
+				})
+			})
+			values := (directive.order :: {
+				'asc' -> values
+				_ -> reverse(values)
+			})
+			values := (directive.limit :: {
+				() -> values
+				_ -> slice(values, 0, directive.limit)
+			})
 
-					itemParts := map(values, (item, i) => (
-						generateReader(Reader(rest), (
-							item.i := i
-							item.'_' := values
-							item.'*' := params
-							item.parts := params.parts
-						))
+			eachBranch := (
+				rest := readUntilEnd()
+				restReader := Reader(rest)
+				generateReader(restReader, {
+					parts: params.parts
+				})
+				each(range(0, len((restReader.readUntilEnd)()), 1), reader.back)
+
+				itemParts := map(values, (item, i) => (
+					generateReader(Reader(rest), (
+						item.i := i
+						item.'_' := values
+						item.'*' := params
+						item.parts := params.parts
 					))
-					cat(itemParts, '')
-				)
-				elseBranch := (next() :: {
-					{type: Directive.Else} -> (
-						maybeBranch := generateReader(reader, params)
-						next() :: {
-							{type: Directive.End} -> maybeBranch
-							_ -> (
-								log('[sistine] invalid template, could not find {{ end }}')
-								''
-							)
-						}
-					)
-					{type: Directive.End} -> ''
-					() -> (
-						log('[sistine] invalid template, could not find {{ else }}')
-						''
-					)
-				})
-
-				len(values) :: {
-					0 -> elseBranch
-					_ -> eachBranch
-				}
+				))
+				cat(itemParts, '')
 			)
-		}
+			elseBranch := (next() :: {
+				{type: Directive.Else} -> (
+					maybeBranch := generateReader(reader, params)
+					next() :: {
+						{type: Directive.End} -> maybeBranch
+						_ -> (
+							log('[sistine] invalid template, could not find {{ end }}')
+							''
+						)
+					}
+				)
+				{type: Directive.End} -> ''
+				() -> (
+					log('[sistine] invalid template, could not find {{ else }}')
+					''
+				)
+			})
+
+			len(values) :: {
+				0 -> elseBranch
+				_ -> eachBranch
+			}
+		)
 		Directive.Part -> partialTpl := params.parts.(directive.name) :: {
 			() -> (
 				log(f('[sistine] unknown template part "{{ name }}"', directive))
