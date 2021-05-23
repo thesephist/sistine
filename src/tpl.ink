@@ -252,7 +252,9 @@ generateDirective := (reader, params) => (
 				eachBranch := (
 					rest := readUntilEnd()
 					restReader := Reader(rest)
-					generateReader(restReader, {})
+					generateReader(restReader, {
+						parts: params.parts
+					})
 					each(range(0, len((restReader.readUntilEnd)()), 1), reader.back)
 
 					itemParts := map(values, (item, i) => (
@@ -260,6 +262,7 @@ generateDirective := (reader, params) => (
 							item.i := i
 							item.'_' := values
 							item.'*' := params
+							item.parts := params.parts
 						))
 					))
 					cat(itemParts, '')
