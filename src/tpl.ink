@@ -115,6 +115,10 @@ compileReader := reader => (
 					sub()
 				)
 			}
+			` allow {\{ to be an escaped {{ `
+			'\\' -> sub(append(c))
+			` if template ends with { `
+			() -> sub(append(c))
 			_ -> sub(append(c + d))
 		}
 		_ -> run := readUntil('{') :: {
