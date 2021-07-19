@@ -68,9 +68,6 @@ copyDir := (src, dest) => make(dest, evt => evt.type :: {
 	})
 })
 
-` copy static/ into public/ `
-copyDir('./static', './public')
-
 ` compile Markdown, taking into account front matter `
 compileContentPage := file => (
 	reader := Reader(split(file, Newline))
@@ -304,10 +301,15 @@ withSiteParams := siteParams => withParts(parts => (
 	))
 ))
 
-main := () => readFile('./config.json', file => file :: {
-	() -> log('[sistine] could not read the configuration file')
-	_ -> withSiteParams({
-		site: deJSON(file)
+main := () => (
+	` copy static/ into public/ `
+	copyDir('./static', './public')
+
+	readFile('./config.json', file => file :: {
+		() -> log('[sistine] could not read the configuration file')
+		_ -> withSiteParams({
+			site: deJSON(file)
+		})
 	})
-})
+)
 
